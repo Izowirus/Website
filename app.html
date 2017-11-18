@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ng-app="app" ng-controller="controller">
+<div class = "container">
+    <form name="myForm" ng-submit="submitForm()">
+        <div class="form-group">
+            <label for="name">
+                Name:
+            </label> 
+            <input name="name" 
+                   class="form-control" 
+                   ng-model="parameter.name" 
+                   ng-pattern ="nameRegex" 
+                   required>
+            <div class="alert alert-warning"
+                 ng-show="myForm.name.$invalid && myForm.name.$dirty">
+                Name should be a word start from a capital letter.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="age"> 
+                Age: 
+            </label>
+            <input name="number" 
+                   class="form-control" 
+                   type="number" 
+                   ng-model="parameter.age" 
+                   min="18" 
+                   max="100" 
+                   required>
+            <div class="alert alert-warning" ng-show="myForm.number.$invalid && myForm.number.$dirty">
+                Age should be a number between 18 and 100.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="color">
+                Color:
+            </label>
+            <select name="color" 
+                    class="form-control" 
+                    ng-model="parameter.color"  
+                    ng-change="change()" 
+                    required>
+                <option ng-repeat="color in colors" ng-value="color">
+                    {{color}}
+                </option>
+            </select>
+        </div>
+        <fieldset class="form-group">
+             <label for="size">
+                 Size:
+             </label>
+             <label class="form-check-label radio-inline">
+                 <input type="radio" 
+                        ng-required="!parameter.size"  
+                        ng-change="change()" 
+                        ng-model="parameter.size" 
+                        value="S">
+                 S
+            </label>
+             <label class="form-check-label radio-inline">
+                 <input type="radio" 
+                        ng-required="!parameter.size"  
+                        ng-change="change()" 
+                        ng-model="parameter.size" 
+                        value="M">
+                 M
+             </label>
+             <label class="form-check-label radio-inline">
+                 <input type="radio" 
+                        ng-required="!parameter.size"  
+                        ng-change="change()" 
+                        ng-model="parameter.size" 
+                        value="L">
+                 L
+             </label>
+             <label class="form-check-label radio-inline">
+                 <input type="radio" 
+                        ng-required="!parameter.size"  
+                        ng-change="change()" 
+                        ng-model="parameter.size" 
+                        value="XL">
+                 XL
+             </label>
+        </fieldset>
+        <div class="square" ng-style="myStyle"></div>
+        <div class="alert alert-danger" ng-show="notInStock">
+            Combination of this size and color is not available
+        </div>
+        <div class="form-group">
+            <button type = "submit" 
+                    class="btn btn-primary" 
+                    ng-disabled="!myForm.$valid || notInStock">
+                Save
+            </button>
+        </div>
+    </form>
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Color</th>
+            <th>Size</th>
+        </tr>
+        <tr ng-repeat="param in parameters">
+            <td>{{param.name}}</td>
+            <td>{{param.age}}</td>
+            <td>{{param.color}}</td>
+            <td>{{param.size}}</td>
+        </tr>
+    </table>
+</div>
+</body>
+<script src="controller.js"></script>
+</html>
